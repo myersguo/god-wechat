@@ -1,0 +1,15 @@
+{
+    "pages": [
+      "pages/index/index"
+    ],
+    "window": {
+      "backgroundTextStyle": "light",
+      "navigationBarBackgroundColor": "#ff6b35",
+      "navigationBarTitleText": "灵签祈福",
+      "navigationBarTextStyle": "white",
+      "backgroundColor": "#f8f8f8"
+    },
+    "cloud": true,
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+  }

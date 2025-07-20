@@ -1,0 +1,24 @@
+# 依赖
+node_modules/
+
+# 环境变量
+.env
+.env.local
+.env.production
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+
+# 运行时
+.DS_Store
+*.pid
+*.seed
+
+# 编辑器
+.vscode/
+.idea/
+
+# 系统文件
+Thumbs.db

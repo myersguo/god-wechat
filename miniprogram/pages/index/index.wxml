@@ -1,0 +1,38 @@
+<view class="container">
+  <!-- 标题区域 -->
+  <view class="header">
+    <text class="title">🙏 灵签祈福 🙏</text>
+    <text class="subtitle">心诚则灵，默念心愿后点击求签</text>
+  </view>
+
+  <!-- 签筒区域 -->
+  <view class="fortune-container">
+    <view class="fortune-box {{isShaking ? 'shake' : ''}}" bindtap="drawFortune">
+      <view class="fortune-icon">
+        <text class="icon-text">🎋</text>
+      </view>
+      <text class="fortune-text">{{isLoading ? '正在求签...' : '点击求签'}}</text>
+    </view>
+  </view>
+
+  <!-- 结果显示区域 -->
+  <view class="result-container" wx:if="{{fortuneResult}}">
+    <view class="result-card">
+      <view class="result-header">
+        <text class="result-type {{fortuneResult.typeClass}}">{{fortuneResult.title}}</text>
+      </view>
+      <view class="result-content">
+        <text class="result-description">{{fortuneResult.description}}</text>
+      </view>
+      <view class="result-advice">
+        <text class="advice-title">签语解释：</text>
+        <text class="advice-content">{{fortuneResult.advice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重新求签按钮 -->
+  <view class="retry-container" wx:if="{{fortuneResult}}">
+    <button class="retry-btn" bindtap="resetFortune">重新求签</button>
+  </view>
+</view>

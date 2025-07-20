@@ -1,0 +1,177 @@
+.container {
+    padding: 40rpx;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 80rpx;
+  }
+  
+  .title {
+    display: block;
+    font-size: 48rpx;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+  }
+  
+  .subtitle {
+    display: block;
+    font-size: 28rpx;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .fortune-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60rpx;
+  }
+  
+  .fortune-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40rpx;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20rpx;
+    backdrop-filter: blur(10rpx);
+    border: 2rpx solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .fortune-box:active {
+    transform: scale(0.95);
+  }
+  
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10rpx); }
+    75% { transform: translateX(10rpx); }
+  }
+  
+  .fortune-image {
+    width: 120rpx;
+    height: 120rpx;
+    margin-bottom: 20rpx;
+  }
+  
+  .fortune-text {
+    color: white;
+    font-size: 32rpx;
+    font-weight: bold;
+  }
+  
+  .result-container {
+    margin-bottom: 40rpx;
+  }
+  
+  .result-card {
+    background: white;
+    border-radius: 20rpx;
+    padding: 40rpx;
+    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .result-header {
+    text-align: center;
+    margin-bottom: 30rpx;
+  }
+  
+  .result-type {
+    font-size: 36rpx;
+    font-weight: bold;
+    padding: 10rpx 30rpx;
+    border-radius: 50rpx;
+    color: white;
+  }
+  
+  .excellent {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  }
+  
+  .good {
+    background: linear-gradient(45deg, #ffa726, #ff9800);
+  }
+  
+  .fair {
+    background: linear-gradient(45deg, #42a5f5, #1976d2);
+  }
+  
+  .poor {
+    background: linear-gradient(45deg, #78909c, #546e7a);
+  }
+  
+  .result-content {
+    margin-bottom: 30rpx;
+  }
+  
+  .result-description {
+    font-size: 32rpx;
+    color: #333;
+    line-height: 1.6;
+    text-align: center;
+  }
+  
+  .result-advice {
+    border-top: 2rpx solid #f0f0f0;
+    padding-top: 30rpx;
+  }
+  
+  .advice-title {
+    display: block;
+    font-size: 28rpx;
+    color: #666;
+    margin-bottom: 15rpx;
+    font-weight: bold;
+  }
+  
+  .advice-content {
+    font-size: 28rpx;
+    color: #333;
+    line-height: 1.8;
+  }
+  
+  .retry-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .retry-btn {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    border-radius: 50rpx;
+    padding: 20rpx 60rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+  }
+  
+  .retry-btn:active {
+    transform: scale(0.95);
+  }
+
+
+.fortune-icon {
+    width: 120rpx;
+    height: 120rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #ff6b35, #f7931e);
+    border-radius: 50%;
+    margin-bottom: 20rpx;
+    box-shadow: 0 8rpx 20rpx rgba(255, 107, 53, 0.3);
+    border: 4rpx solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .icon-text {
+    font-size: 60rpx;
+    color: white;
+    text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.2);
+  }
