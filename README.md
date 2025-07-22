@@ -8,6 +8,11 @@
 - 幸运签/运势：提供每日幸运签、运势等趣味功能，帮助用户获取每日正能量。
 - 后端 API：Node.js 服务为小程序提供梦境解析、用户数据管理等接口，支持本地和 Docker 部署。
 
+
+<img width="742" height="1254" alt="image" src="https://github.com/user-attachments/assets/f21f1c65-3e2b-4acd-a557-1b4e6c19a65d" />
+<img width="730" height="1258" alt="image" src="https://github.com/user-attachments/assets/3775996d-6632-41f3-a7e8-2075167b2b29" />
+
+
 ## 目录结构
 
 ```
