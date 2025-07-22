@@ -59,15 +59,40 @@ Page({
 
   // 重新求签
   resetFortune() {
-    this.setData({
-      fortuneResult: null,
-      isLoading: false,
-      isShaking: false
-    })
+    this.drawFortune()
+  },
+
+onShareAppMessage() {
+    const result = this.data.fortuneResult
+    if (result) {
+      return {
+        title: `我求到了${result.title}！${result.description}`,
+        path: '/pages/index/index',
+        imageUrl: '' // 可以设置分享图片
+      }
+    }
+    
+    return {
+      title: '灵签祈福 - 心诚则灵',
+      path: '/pages/index/index'
+    }
+  },
+  
+  onShareTimeline() {
+    const result = this.data.fortuneResult
+    if (result) {
+      return {
+        title: `我求到了${result.title}！${result.description}`,
+        imageUrl: ''
+      }
+    }
+    
+    return {
+      title: '灵签祈福 - 心诚则灵'
+    }
   },
 
   // 页面加载
   onLoad() {
-    console.log('求签页面加载完成')
   }
 })

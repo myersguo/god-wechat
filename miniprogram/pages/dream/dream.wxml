@@ -1,0 +1,127 @@
+<view class="container">
+  <!-- 标题区域 -->
+  <view class="header">
+    <text class="title">🌙 周公解梦 🌙</text>
+    <text class="subtitle">梦境反映内心，解梦指引方向</text>
+  </view>
+
+  <!-- 梦境选择区域 -->
+  <view class="dream-selection" wx:if="{{!dreamResult && !isLoading}}">
+    <view class="selection-title">
+      <text class="selection-text">选择您的梦境</text>
+      <text class="selection-desc">点击下方梦境类型直接解梦</text>
+    </view>
+    
+    <!-- 预设梦境选项 -->
+    <view class="dream-options">
+      <view 
+        class="dream-option" 
+        wx:for="{{dreamOptions}}" 
+        wx:key="key"
+        bindtap="analyzeDreamDirect"
+        data-key="{{item.key}}"
+        data-name="{{item.name}}"
+      >
+        <text class="option-icon">{{item.icon}}</text>
+        <text class="option-name">{{item.name}}</text>
+      </view>
+    </view>
+
+    <!-- 分隔线 -->
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">或者</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <!-- 自定义梦境输入 -->
+    <view class="custom-dream">
+      <view class="input-title">
+        <text>描述您的梦境</text>
+      </view>
+      <textarea 
+        class="dream-input" 
+        placeholder="请详细描述您梦到的场景、人物、情节等..."
+        value="{{customDream}}"
+        bindinput="onDreamInput"
+        maxlength="200"
+        show-confirm-bar="{{false}}"
+      ></textarea>
+      <view class="input-count">{{customDream.length}}/200</view>
+    </view>
+
+    <!-- 解梦按钮 - 修复显示条件 -->
+    <view class="analyze-container" >
+      <button 
+        class="analyze-btn" 
+        bindtap="analyzeCustomDream"
+      >
+        开始解梦
+      </button>
+    </view>
+  </view>
+
+  <!-- 加载状态显示 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">🔮 正在为您解梦...</text>
+      <text class="loading-desc">分析梦境含义，请稍候</text>
+    </view>
+  </view>
+
+  <!-- 解梦结果显示区域 -->
+  <view class="result-container" wx:if="{{dreamResult && !isLoading}}">
+    <view class="result-card">
+      <!-- 梦境描述 -->
+      <view class="dream-description">
+        <view class="desc-header">
+          <text class="desc-icon">💭</text>
+          <text class="desc-title">梦境描述</text>
+        </view>
+        <text class="desc-content">{{dreamResult.dreamDescription}}</text>
+      </view>
+
+      <!-- 梦境分类 -->
+      <view class="dream-category">
+        <view class="category-header">
+          <text class="category-icon">🏷️</text>
+          <text class="category-title">梦境分类</text>
+        </view>
+        <text class="category-content">{{dreamResult.category}}</text>
+      </view>
+
+      <!-- 传统解梦 -->
+      <view class="traditional-section">
+        <view class="section-header">
+          <text class="section-icon">📜</text>
+          <text class="section-title">传统周公解梦</text>
+        </view>
+        <text class="traditional-content">{{dreamResult.traditional}}</text>
+      </view>
+
+      <!-- 现代心理学解释 -->
+      <view class="psychology-section">
+        <view class="section-header">
+          <text class="section-icon">🧠</text>
+          <text class="section-title">现代心理学解释</text>
+        </view>
+        <text class="psychology-content">{{dreamResult.psychology}}</text>
+      </view>
+
+      <!-- AI智能建议 -->
+      <view class="advice-section">
+        <view class="section-header">
+          <text class="section-icon">💡</text>
+          <text class="section-title">AI智能建议</text>
+        </view>
+        <text class="advice-content">{{dreamResult.advice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重新解梦按钮 -->
+  <view class="retry-container" wx:if="{{dreamResult && !isLoading}}">
+    <button class="retry-btn" bindtap="resetDream">重新解梦</button>
+  </view>
+</view>

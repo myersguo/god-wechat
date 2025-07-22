@@ -1,4 +1,6 @@
 {
     "usingComponents": {},
-    "navigationBarTitleText": "灵签祈福"
+    "navigationBarTitleText": "灵签祈福",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#667eea"
   }

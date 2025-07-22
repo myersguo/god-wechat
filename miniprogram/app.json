@@ -1,7 +1,28 @@
 {
     "pages": [
-      "pages/index/index"
+      "pages/index/index",
+      "pages/dream/dream"
     ],
+    "tabBar": {
+      "color": "#666666",
+      "selectedColor": "#ff6b35",
+      "backgroundColor": "#ffffff",
+      "borderStyle": "black",
+      "list": [
+        {
+          "pagePath": "pages/index/index",
+          "text": "求签",
+          "iconPath": "images/fortune.png",
+          "selectedIconPath": "images/fortune.png"
+        },
+        {
+          "pagePath": "pages/dream/dream",
+          "text": "解梦",
+          "iconPath": "images/dream.png",
+          "selectedIconPath": "images/dream.png"
+        }
+      ]
+    },
     "window": {
       "backgroundTextStyle": "light",
       "navigationBarBackgroundColor": "#ff6b35",

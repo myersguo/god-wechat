@@ -1,0 +1,6 @@
+{
+    "usingComponents": {},
+    "navigationBarTitleText": "周公解梦",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#4a90e2"
+  }

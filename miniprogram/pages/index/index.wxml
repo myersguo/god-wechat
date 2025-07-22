@@ -19,7 +19,7 @@
   <view class="result-container" wx:if="{{fortuneResult}}">
     <view class="result-card">
       <view class="result-header">
-        <text class="result-type {{fortuneResult.typeClass}}">{{fortuneResult.title}}</text>
+        <text class="result-type {{fortuneResult.typeClass}}">{{fortuneResult.title + " : " + fortuneResult.type}}</text>
       </view>
       <view class="result-content">
         <text class="result-description">{{fortuneResult.description}}</text>

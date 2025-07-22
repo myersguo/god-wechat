@@ -2,14 +2,13 @@
 const CLOUD_CONFIG = {
     env: 'prod-0g1xepwt370c1525', // 你的云环境ID
     service: 'express-4jbr', // 你的服务名称
-    path: '/api/fortune' // API路径
+    path: '/api/fortune',
+    dreamPath: '/api/dream',
   }
 
 // 获取求签结果的主函数
 function getFortune() {
   return new Promise((resolve, reject) => {
-    console.log('开始调用云托管API...')
-    
     wx.cloud.callContainer({
       config: {
         env: CLOUD_CONFIG.env
@@ -25,8 +24,6 @@ function getFortune() {
         timestamp: Date.now(),
       },
       success: (res) => {
-        console.log('云托管API调用成功:', res)
-        
         try {
           // 检查响应状态
           if (res.statusCode === 200) {
@@ -34,7 +31,6 @@ function getFortune() {
             
             // 检查业务状态
             if (data.success) {
-              console.log('求签成功:', data.data)
               resolve(data.data)
             } else {
               console.error('求签业务失败:', data.message)
@@ -82,7 +78,6 @@ function getFortuneTypes() {
       },
       method: 'GET',
       success: (res) => {
-        console.log('获取签型统计成功:', res)
         if (res.statusCode === 200 && res.data.success) {
           resolve(res.data.data)
         } else {
@@ -110,7 +105,6 @@ function healthCheck() {
       },
       method: 'GET',
       success: (res) => {
-        console.log('健康检查结果:', res)
         if (res.statusCode === 200) {
           resolve(res.data)
         } else {
@@ -125,8 +119,65 @@ function healthCheck() {
   })
 }
 
+function analyzeDream(dreamDescription) {
+    return new Promise((resolve, reject) => {
+      wx.cloud.callContainer({
+        config: {
+          env: CLOUD_CONFIG.env
+        },
+        path: CLOUD_CONFIG.dreamPath,
+        header: {
+          'X-WX-SERVICE': CLOUD_CONFIG.service,
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        data: {
+          action: 'analyzeDream',
+          dreamDescription: dreamDescription,
+          timestamp: Date.now()
+        },
+        success: (res) => {
+          try {
+            if (res.statusCode === 200) {
+              const data = res.data
+              
+              if (data.success) {
+                resolve(data.data)
+              } else {
+                console.error('解梦业务失败:', data.message)
+                reject(new Error(data.message || '解梦失败'))
+              }
+            } else {
+              console.error('HTTP状态码错误:', res.statusCode, res.data)
+              reject(new Error(`服务器错误: ${res.statusCode}`))
+            }
+          } catch (error) {
+            console.error('解析响应数据失败:', error)
+            reject(new Error('数据解析失败'))
+          }
+        },
+        fail: (error) => {
+          console.error('解梦API调用失败:', error)
+          
+          let errorMessage = '网络连接失败'
+          
+          if (error.errMsg) {
+            if (error.errMsg.includes('timeout')) {
+              errorMessage = '请求超时，请检查网络连接'
+            } else if (error.errMsg.includes('fail')) {
+              errorMessage = '服务暂时不可用，请稍后重试'
+            }
+          }
+          
+          reject(new Error(errorMessage))
+        }
+      })
+    })
+  }
+
 module.exports = {
   getFortune,
   getFortuneTypes,
-  healthCheck
+  healthCheck,
+  analyzeDream,
 }
