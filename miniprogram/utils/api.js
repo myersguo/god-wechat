@@ -175,9 +175,72 @@ function analyzeDream(dreamDescription) {
     })
   }
 
+// 算命分析函数
+function calculateFortune(userInfo) {
+  return new Promise((resolve, reject) => {
+    console.log('开始调用算命API...', userInfo)
+    
+    wx.cloud.callContainer({
+      config: {
+        env: CLOUD_CONFIG.env
+      },
+      path: '/api/calculate-fortune',
+      header: {
+        'X-WX-SERVICE': CLOUD_CONFIG.service,
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      data: {
+        action: 'calculateFortune',
+        userInfo: userInfo,
+        timestamp: Date.now()
+      },
+      success: (res) => {
+        console.log('算命API调用成功:', res)
+        
+        try {
+          if (res.statusCode === 200) {
+            const data = res.data
+            
+            if (data.success) {
+              console.log('算命成功:', data.data)
+              resolve(data.data)
+            } else {
+              console.error('算命业务失败:', data.message)
+              reject(new Error(data.message || '算命失败'))
+            }
+          } else {
+            console.error('HTTP状态码错误:', res.statusCode, res.data)
+            reject(new Error(`服务器错误: ${res.statusCode}`))
+          }
+        } catch (error) {
+          console.error('解析响应数据失败:', error)
+          reject(new Error('数据解析失败'))
+        }
+      },
+      fail: (error) => {
+        console.error('算命API调用失败:', error)
+        
+        let errorMessage = '网络连接失败'
+        
+        if (error.errMsg) {
+          if (error.errMsg.includes('timeout')) {
+            errorMessage = '请求超时，请检查网络连接'
+          } else if (error.errMsg.includes('fail')) {
+            errorMessage = '服务暂时不可用，请稍后重试'
+          }
+        }
+        
+        reject(new Error(errorMessage))
+      }
+    })
+  })
+}
+
 module.exports = {
   getFortune,
-  getFortuneTypes,
-  healthCheck,
   analyzeDream,
+  calculateFortune, 
+  getFortuneTypes,
+  healthCheck
 }

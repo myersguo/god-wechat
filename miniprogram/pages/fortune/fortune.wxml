@@ -1,0 +1,218 @@
+<view class="container">
+  <!-- 标题区域 -->
+  <view class="header">
+    <text class="title">🔮 AI智能算命 🔮</text>
+    <text class="subtitle">输入八字信息，解读命运玄机</text>
+  </view>
+
+  <!-- 信息输入区域 -->
+  <view class="input-section" wx:if="{{!fortuneResult && !isLoading}}">
+    <!-- 姓名输入 -->
+    <view class="input-group">
+      <view class="input-label">
+        <text class="label-icon">👤</text>
+        <text class="label-text">姓名</text>
+      </view>
+      <input 
+        class="input-field input-field-title" 
+        placeholder="请输入姓名"
+        value="{{userInfo.name}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <!-- 性别选择 -->
+    <view class="input-group">
+      <view class="input-label">
+        <text class="label-icon">⚧</text>
+        <text class="label-text">性别</text>
+      </view>
+      <view class="gender-selector">
+        <view 
+          class="gender-option {{userInfo.gender === 'male' ? 'selected' : ''}}"
+          bindtap="selectGender"
+          data-gender="male"
+        >
+          <text>男</text>
+        </view>
+        <view 
+          class="gender-option {{userInfo.gender === 'female' ? 'selected' : ''}}"
+          bindtap="selectGender"
+          data-gender="female"
+        >
+          <text>女</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 出生年月日 -->
+    <view class="input-group">
+      <view class="input-label">
+        <text class="label-icon">📅</text>
+        <text class="label-text">出生年月日</text>
+      </view>
+      <picker 
+        mode="date"
+        value="{{userInfo.birthDate}}"
+        start="1900-01-01"
+        end="2025-12-31"
+        bindchange="onDateChange"
+        class="date-picker"
+      >
+        <view class="picker-display">
+          {{userInfo.birthDate || '请选择出生日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 出生时间（可选） -->
+    <view class="input-group">
+      <view class="input-label">
+        <text class="label-icon">🕐</text>
+        <text class="label-text">出生时间（可选）</text>
+      </view>
+      <picker 
+        mode="time"
+        value="{{userInfo.birthTime}}"
+        bindchange="onTimeChange"
+        class="time-picker"
+      >
+        <view class="picker-display">
+          {{userInfo.birthTime || '请选择出生时间'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 算命按钮 -->
+    <view class="calculate-container">
+    <button 
+        class="calculate-btn" 
+        bindtap="startFortuneTelling"
+        disabled="{{!userInfo.name || !userInfo.birthDate}}"
+    >
+        开始算命
+    </button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">🔮 正在为您算命...</text>
+      <text class="loading-desc">分析八字命理，请稍候</text>
+    </view>
+  </view>
+
+  <!-- 算命结果显示 -->
+  <view class="result-container" wx:if="{{fortuneResult && !isLoading}}">
+    <view class="result-card">
+      <!-- 基本信息 -->
+      <view class="basic-info">
+        <view class="info-header">
+          <text class="info-icon">📋</text>
+          <text class="info-title">基本信息</text>
+        </view>
+        <view class="info-content">
+          <text class="info-item">姓名：{{fortuneResult.name}}</text>
+          <text class="info-item">性别：{{fortuneResult.gender === 'male' ? '男' : '女'}}</text>
+          <text class="info-item">出生日期：{{fortuneResult.birthDate}}</text>
+          <text class="info-item" wx:if="{{fortuneResult.birthTime}}">出生时间：{{fortuneResult.birthTime}}</text>
+        </view>
+      </view>
+
+      <!-- 命理基础 -->
+      <view class="fortune-basics">
+        <view class="basics-header">
+          <text class="basics-icon">🐲</text>
+          <text class="basics-title">命理基础</text>
+        </view>
+        <view class="basics-grid">
+          <view class="basic-item">
+            <text class="basic-label">生肖</text>
+            <text class="basic-value">{{fortuneResult.zodiac}}</text>
+          </view>
+          <view class="basic-item">
+            <text class="basic-label">星座</text>
+            <text class="basic-value">{{fortuneResult.constellation}}</text>
+          </view>
+          <view class="basic-item">
+            <text class="basic-label">五行</text>
+            <text class="basic-value">{{fortuneResult.fiveElements}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 性格特点 -->
+      <view class="personality-section">
+        <view class="section-header">
+          <text class="section-icon">🎭</text>
+          <text class="section-title">性格特点</text>
+        </view>
+        <text class="section-content">{{fortuneResult.personality}}</text>
+      </view>
+
+      <!-- 综合运势 -->
+      <view class="overall-fortune">
+        <view class="section-header">
+          <text class="section-icon">⭐</text>
+          <text class="section-title">综合运势</text>
+        </view>
+        <text class="section-content">{{fortuneResult.overallFortune}}</text>
+      </view>
+
+      <!-- 各项运势 -->
+      <view class="detailed-fortune">
+        <!-- 事业运势 -->
+        <view class="fortune-item">
+          <view class="fortune-header">
+            <text class="fortune-icon">💼</text>
+            <text class="fortune-title">事业运势</text>
+          </view>
+          <text class="fortune-content">{{fortuneResult.careerFortune}}</text>
+        </view>
+
+        <!-- 感情运势 -->
+        <view class="fortune-item">
+          <view class="fortune-header">
+            <text class="fortune-icon">💕</text>
+            <text class="fortune-title">感情运势</text>
+          </view>
+          <text class="fortune-content">{{fortuneResult.loveFortune}}</text>
+        </view>
+
+        <!-- 健康运势 -->
+        <view class="fortune-item">
+          <view class="fortune-header">
+            <text class="fortune-icon">🍀</text>
+            <text class="fortune-title">健康运势</text>
+          </view>
+          <text class="fortune-content">{{fortuneResult.healthFortune}}</text>
+        </view>
+      </view>
+
+      <!-- 幸运元素 -->
+      <view class="lucky-elements">
+        <view class="section-header">
+          <text class="section-icon">🌟</text>
+          <text class="section-title">幸运元素</text>
+        </view>
+        <text class="section-content">{{fortuneResult.luckyElements}}</text>
+      </view>
+
+      <!-- 开运建议 -->
+      <view class="advice-section">
+        <view class="section-header">
+          <text class="section-icon">💡</text>
+          <text class="section-title">开运建议</text>
+        </view>
+        <text class="section-content">{{fortuneResult.advice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重新算命按钮 -->
+  <view class="retry-container" wx:if="{{fortuneResult && !isLoading}}">
+    <button class="retry-btn" bindtap="resetFortune">重新算命</button>
+  </view>
+</view>

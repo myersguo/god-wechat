@@ -1,36 +1,43 @@
 {
-    "pages": [
-      "pages/index/index",
-      "pages/dream/dream"
-    ],
-    "tabBar": {
-      "color": "#666666",
-      "selectedColor": "#ff6b35",
-      "backgroundColor": "#ffffff",
-      "borderStyle": "black",
-      "list": [
-        {
-          "pagePath": "pages/index/index",
-          "text": "求签",
-          "iconPath": "images/fortune.png",
-          "selectedIconPath": "images/fortune.png"
-        },
-        {
-          "pagePath": "pages/dream/dream",
-          "text": "解梦",
-          "iconPath": "images/dream.png",
-          "selectedIconPath": "images/dream.png"
-        }
-      ]
-    },
-    "window": {
-      "backgroundTextStyle": "light",
-      "navigationBarBackgroundColor": "#ff6b35",
-      "navigationBarTitleText": "灵签祈福",
-      "navigationBarTextStyle": "white",
-      "backgroundColor": "#f8f8f8"
-    },
-    "cloud": true,
-    "style": "v2",
-    "sitemapLocation": "sitemap.json"
-  }
+  "pages": [
+    "pages/index/index",
+    "pages/dream/dream",
+    "pages/fortune/fortune"
+  ],
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#ff6b35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "求签",
+        "iconPath": "images/fortune.png",
+        "selectedIconPath": "images/fortune.png"
+      },
+      {
+        "pagePath": "pages/dream/dream",
+        "text": "解梦",
+        "iconPath": "images/dream.png",
+        "selectedIconPath": "images/dream.png"
+      },
+      {
+        "pagePath": "pages/fortune/fortune",
+        "text": "算命",
+        "iconPath": "images/calculate.png",
+        "selectedIconPath": "images/calculate.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ff6b35",
+    "navigationBarTitleText": "灵签祈福",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f8f8f8"
+  },
+  "cloud": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,305 @@
+.container {
+  padding: 40rpx;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.title {
+  display: block;
+  font-size: 48rpx;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.input-section {
+  margin-bottom: 40rpx;
+}
+
+.input-group {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  backdrop-filter: blur(10rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.label-icon {
+  font-size: 32rpx;
+  margin-right: 15rpx;
+}
+
+.label-text {
+  color: white;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+.input-field-title {
+    height: 80rpx;
+}
+
+.gender-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.gender-option {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12rpx;
+  padding: 20rpx;
+  text-align: center;
+  color: white;
+  font-size: 28rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.gender-option.selected {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.date-picker, .time-picker {
+  width: 100%;
+}
+
+.picker-display {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.calculate-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50rpx;
+}
+
+.calculate-btn {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  border-radius: 50rpx;
+  padding: 25rpx 80rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 53, 0.4);
+}
+
+.calculate-btn:disabled {
+  background: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400rpx;
+}
+
+.loading-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20rpx;
+  padding: 60rpx 40rpx;
+  backdrop-filter: blur(10rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.3);
+  border-top: 6rpx solid white;
+  border-radius: 50%;
+  margin: 0 auto 30rpx;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  display: block;
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.loading-desc {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 26rpx;
+}
+
+.result-container {
+  margin-bottom: 40rpx;
+}
+
+.result-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.basic-info, .fortune-basics, .personality-section, .overall-fortune,
+.detailed-fortune, .lucky-elements, .advice-section {
+  margin-bottom: 35rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.advice-section {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.info-header, .basics-header, .section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25rpx;
+}
+
+.info-icon, .basics-icon, .section-icon {
+  font-size: 32rpx;
+  margin-right: 15rpx;
+}
+
+.info-title, .basics-title, .section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.info-item {
+  font-size: 28rpx;
+  color: #555;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.basics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.basic-item {
+  text-align: center;
+  background: linear-gradient(45deg, #8e44ad, #9b59b6);
+  color: white;
+  padding: 20rpx;
+  border-radius: 12rpx;
+}
+
+.basic-label {
+  display: block;
+  font-size: 24rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.9;
+}
+
+.basic-value {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.section-content {
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #555;
+  text-align: justify;
+}
+
+.fortune-item {
+  margin-bottom: 25rpx;
+}
+
+.fortune-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.fortune-icon {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.fortune-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.fortune-content {
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: #666;
+  text-align: justify;
+}
+
+.retry-container {
+  display: flex;
+  justify-content: center;
+}
+
+.retry-btn {
+  background: linear-gradient(45deg, #8e44ad, #9b59b6);
+  color: white;
+  border: none;
+  border-radius: 50rpx;
+  padding: 20rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.retry-btn:active {
+  transform: scale(0.95);
+}
+
+

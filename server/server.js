@@ -402,6 +402,166 @@ app.post('/api/dream', async (req, res) => {
   }
 });
 
+// 算命相关函数
+async function callFortuneAI(userInfo) {
+  const { name, gender, birthDate, birthTime } = userInfo
+  
+  const prompt = `你是一位精通八字命理、生肖运势、星座占卜的算命大师。现在有一位求测者：
+
+姓名：${name}
+性别：${gender === 'male' ? '男' : '女'}
+出生日期：${birthDate}
+${birthTime ? `出生时间：${birthTime}` : ''}
+
+请为这位求测者进行详细的命理分析，包括：
+
+1. 生肖：根据出生年份确定生肖
+2. 星座：根据出生月日确定星座
+3. 五行：根据出生年月日分析五行属性
+4. 性格特点：结合生肖、星座分析性格特征
+5. 综合运势：整体运势分析
+6. 事业运势：工作事业方面的运势
+7. 感情运势：爱情婚姻方面的运势
+8. 健康运势：身体健康方面的运势
+9. 幸运元素：幸运数字、颜色、方位等
+10. 开运建议：具体的改运建议
+
+要求：
+- 结合传统命理学和现代占星学
+- 语言要专业但通俗易懂
+- 内容要积极正面，给人希望和指导
+- 结合2025年的时代特点
+
+请按以下JSON格式返回：
+{
+  "name": "${name}",
+  "gender": "${gender}",
+  "birthDate": "${birthDate}",
+  "birthTime": "${birthTime || ''}",
+  "zodiac": "生肖",
+  "constellation": "星座",
+  "fiveElements": "五行属性",
+  "personality": "性格特点分析",
+  "overallFortune": "综合运势",
+  "careerFortune": "事业运势",
+  "loveFortune": "感情运势",
+  "healthFortune": "健康运势",
+  "luckyElements": "幸运元素",
+  "advice": "开运建议"
+}`;
+
+  try {
+    const response = await axios.post(
+      process.env.AI_BASE_URL,
+      {
+        model: process.env.AI_MODEL,
+        messages: [
+           {
+            role: 'system',
+            content: '你是一位精通中国传统文化的资深命理师，深谙周易八卦、生辰八字、周公解梦等传统文化。请用专业而温和的语气回答用户的问题，体现中华文化的博大精深。注意：当前时间是2025年，请基于2025年的时间背景进行分析和预测。'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.AI_API_KEY}`
+        },
+        timeout: 30000
+      }
+    );
+
+    if (response.data.choices && response.data.choices.length > 0) {
+      const content = response.data.choices[0].message.content;
+      
+      try {
+        return JSON.parse(content);
+      } catch (e) {
+        return getDefaultFortuneAnalysis(userInfo);
+      }
+    } else {
+      throw new Error('AI API返回数据格式错误');
+    }
+  } catch (error) {
+    console.error('算命AI API调用失败:', error.message);
+    throw error;
+  }
+}
+
+// 默认算命分析
+function getDefaultFortuneAnalysis(userInfo) {
+  const { name, gender, birthDate, birthTime } = userInfo
+  
+  return {
+    name,
+    gender,
+    birthDate,
+    birthTime: birthTime || '',
+    zodiac: "需要具体计算",
+    constellation: "需要具体计算", 
+    fiveElements: "五行平和",
+    personality: "性格温和，为人正直，有责任心，善于交际，具有领导才能。",
+    overallFortune: "整体运势平稳上升，2025年将是收获的一年，各方面都有不错的发展。",
+    careerFortune: "事业运势良好，工作上会有新的机遇，适合主动出击，把握时机。",
+    loveFortune: "感情运势温和，单身者有望遇到心仪对象，有伴者感情稳定发展。",
+    healthFortune: "健康状况良好，注意劳逸结合，适当运动，保持良好作息。",
+    luckyElements: "幸运数字：6、8、9；幸运颜色：金色、红色；幸运方位：东南方",
+    advice: "建议多行善事，保持积极心态。可佩戴玉石饰品增强运势，农历每月初一、十五可焚香祈福。"
+  };
+}
+
+// 算命接口
+app.post('/api/calculate-fortune', async (req, res) => {
+  try {
+    console.log('收到算命请求:', req.body.userInfo);
+    
+    const userInfo = req.body.userInfo;
+    
+    if (!userInfo || !userInfo.name || !userInfo.birthDate) {
+      return res.status(400).json({
+        success: false,
+        error: '参数错误',
+        message: '姓名和出生日期不能为空'
+      });
+    }
+    
+    let result;
+    
+    try {
+      const aiResult = await callFortuneAI(userInfo);
+      result = aiResult;
+      console.log('算命AI调用成功');
+    } catch (aiError) {
+      console.error('算命AI调用失败，使用默认内容:', aiError.message);
+      
+      result = getDefaultFortuneAnalysis(userInfo);
+      result.fallback = true;
+    }
+    
+    result.timestamp = new Date().toISOString();
+    
+    res.json({
+      success: true,
+      data: result
+    });
+    
+  } catch (error) {
+    console.error('算命接口错误:', error);
+    res.status(500).json({
+      success: false,
+      error: '服务器内部错误',
+      message: '算命服务暂时不可用，请稍后重试'
+    });
+  }
+});
+
+
+
 // 错误处理中间件
 app.use((error, req, res, next) => {
   console.error('服务器错误:', error);
